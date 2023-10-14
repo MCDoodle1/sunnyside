@@ -1,0 +1,80 @@
+// grid made up of x columns
+@mixin grid($gap, $min-card-width, $cols) {
+    $prefered-value: calc((($min-card-width * $cols - $gap * 2) - 100%) * 999);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp((100%/$cols) - $gap, $prefered-value, 100%), 1fr));
+    gap: $gap;
+}
+
+@mixin flexbox(
+    $justify-content: false, 
+    $flex: false, 
+    $flex-direction: false, 
+    $align-items: false) {
+        display: flex;
+
+        @if $justify-content not false {
+            justify-content: $justify-content;
+        }
+        @if $flex not false {
+            flex: $flex;
+        }
+        @if $flex-direction not false {
+            flex-direction: $flex-direction;
+        }
+        @if $align-items not false {
+            align-items: $align-items;
+        }
+};
+
+.flow > * + * {
+    margin-top: var(--flow-space, 1em);
+}
+
+.flex {
+    @include flexbox;
+}
+
+.flex-justify-center {
+    @include flexbox($justify-content: center);    
+}
+
+.flex-column {
+    @include flexbox($flex-direction: column);
+}
+
+.flex-col-center {
+    @include flexbox($flex-direction: column, $justify-content: center);
+}
+
+.flex-space-between {
+    @include flexbox($justify-content: space-between, $align-items: center);
+}
+
+.flex-space-around {
+    @include flexbox ($justify-content: space-around);
+}
+
+.box {
+    @include flexbox($flex-direction: column, $justify-content: center);
+}
+
+.grid-2 {
+    @include grid($gap: 0vw, $min-card-width: 26.77ch, $cols: 2);
+}
+
+.grid-2-s {
+    @include grid($gap: 0vw, $min-card-width: 1ch, $cols: 2);
+}
+
+.grid-3 {
+    @include grid($gap: 3em, $min-card-width: 18.64ch, $cols: 3);
+}
+
+.grid-4 {
+    @include grid($gap: 0vw, $min-card-width: 13ch, $cols: 4);
+
+}
+
+
+

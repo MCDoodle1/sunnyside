@@ -1,38 +1,764 @@
-.App {
-  text-align: center;
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600;800&family=Fraunces:opsz,wght@9..144,700;9..144,900&display=swap");
+/***
+    The new CSS reset - version 1.11 (last updated 20.9.2023)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+    - The "html" element is excluded, otherwise a bug in Chrome breaks the CSS hyphens property (https://github.com/elad2412/the-new-css-reset/issues/36)
+ */
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+  all: unset;
+  display: revert;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Fix mobile Safari increase font-size on landscape mode */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Reapply the pointer cursor for anchor tags */
+a, button {
+  cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol, ul, menu {
+  list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+  border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input, textarea {
+  -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+  white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+  -webkit-appearance: revert;
+  -moz-appearance: revert;
+       appearance: revert;
+}
+
+/* preformatted text - use only for this feature */
+:where(pre) {
+  all: revert;
+  box-sizing: border-box;
+}
+
+/* reset default text opacity of input placeholder */
+::-moz-placeholder {
+  color: unset;
+}
+::placeholder {
+  color: unset;
+}
+
+/* remove default dot (•) sign */
+::marker {
+  content: initial;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+  display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable=false])) {
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable=true]) {
+  -webkit-user-drag: element;
+}
+
+/* Revert Modal native behavior */
+:where(dialog:modal) {
+  all: revert;
+  box-sizing: border-box;
+}
+
+.flow > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+.flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: false;
+  flex: false;
+  flex-direction: false;
+  align-items: false;
+}
+
+.flex-justify-center {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex: false;
+  flex-direction: false;
+  align-items: false;
+}
+
+.flex-column {
+  display: flex;
+  justify-content: false;
+  flex: false;
+  flex-direction: column;
+  align-items: false;
+}
+
+.flex-col-center {
+  display: flex;
+  justify-content: center;
+  flex: false;
+  flex-direction: column;
+  align-items: false;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  flex: false;
+  flex-direction: false;
+  align-items: center;
+}
+
+.flex-space-around {
+  display: flex;
+  justify-content: space-around;
+  flex: false;
+  flex-direction: false;
+  align-items: false;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  flex: false;
+  flex-direction: column;
+  align-items: false;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(50% - 0vw, (53.54ch - 0vw - 100%) * 999, 100%), 1fr));
+  gap: 0vw;
+}
+
+.grid-2-s {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(50% - 0vw, (2ch - 0vw - 100%) * 999, 100%), 1fr));
+  gap: 0vw;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(33.3333333333% - 3em, (55.92ch - 6em - 100%) * 999, 100%), 1fr));
+  gap: 3em;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(25% - 0vw, (52ch - 0vw - 100%) * 999, 100%), 1fr));
+  gap: 0vw;
+}
+
+/* Padding */
+.pad-m {
+  padding: var(--gap-m);
+}
+
+.pad-l {
+  padding: var(--gap-l);
+}
+
+.pad-3xl {
+  padding: var(--gap-3xl);
+}
+
+.pad-block-xl {
+  padding-block: var(--gap-xl);
+}
+
+.pad-block-xxl {
+  padding-block: var(--gap-xxl);
+}
+
+.pad-block-3xl {
+  padding-block: var(--gap-3xl);
+}
+
+.pad-inline-l {
+  padding-inline: var(--gap-l);
+}
+
+.pad-inline-xl {
+  padding-inline: var(--gap-xxl);
+}
+
+.pad-bottom-xl {
+  padding-block-end: var(--gap-xl);
+}
+
+/* Margins */
+.mar-t-xl {
+  margin-block-start: var(--gap-xl);
+}
+
+.mar-b-s {
+  margin-block-end: var(--gap-s);
+}
+
+.mar-b-m {
+  margin-block-end: var(--gap-m);
+}
+
+.mar-b-l {
+  margin-block-end: var(--gap-l);
+}
+
+.mar-b-4xl {
+  margin-block-end: var(--gap-4xl);
+}
+
+/* Gaps */
+.gap-m {
+  gap: var(--gap-m);
+}
+
+.gap-l {
+  gap: var(--gap-l);
+}
+
+/* Font Family */
+.ff-sans {
+  font-family: "Barlow", sans-serif;
+}
+
+/* Font Sizes */
+.fs-500 {
+  font-size: var(--fs-500);
+}
+
+.fs-600 {
+  font-size: var(--fs-600);
+}
+
+.fs-700 {
+  font-size: var(--fs-700);
+}
+
+/* Font Weights */
+.fw-800 {
+  font-weight: var(--fw-800);
+}
+
+/* Colors */
+.bg-primary-lighter {
+  background-color: #9ccec4;
+}
+
+.clr-txt-white {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.clr-primary-dark {
+  color: hsl(167, 40%, 24%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.clr-primary-medium {
+  color: #34796a;
 }
+
+.clr-primary-light {
+  color: hsl(168, 34%, 41%);
+}
+
+.clr-neutral-medium {
+  color: hsl(213, 9%, 39%);
+}
+
+.clr-neutral-lighter {
+  color: hsl(210, 4%, 67%);
+}
+
+/* Letter Spacing */
+.letter-space-s {
+  letter-spacing: 0.025ch;
+}
+
+.letter-space-m {
+  letter-spacing: 0.1ch;
+}
+
+/* Navigation and hamburger menus */
+.navigation {
+  display: flex;
+  gap: var(--gap-m);
+  align-items: center;
+  color: white;
+  font-family: "Barlow", sans-serif;
+  font-size: var(--fs-500);
+}
+
+.navigation > li > a:hover {
+  cursor: pointer;
+}
+
+.navigation > li:last-child:hover {
+  color: white;
+  background-color: hsl(202, 86%, 72%);
+}
+
+.hamburger img {
+  width: 75%;
+  height: 75%;
+}
+
+.dropdown {
+  display: flex;
+  gap: var(--gap-l);
+  position: absolute;
+  font-family: "Barlow", sans-serif;
+  font-size: var(--fs-600);
+  color: hsl(232, 10%, 55%);
+  background-color: white;
+  width: 80%;
+  aspect-ratio: 1;
+  top: 20%;
+  left: 10%;
+}
+
+.dropdown::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  border-bottom: 25px solid white;
+  border-left: 30px solid transparent;
+}
+
+/* Underlined link */
+.link {
+  --flow-space: 2em;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: calc(var(--fs-400) * 1.1);
+  font-weight: var(--fw-900);
+  letter-spacing: 0.1em;
+}
+
+.text {
+  position: relative;
+  z-index: 1;
+}
+
+.text:hover {
+  cursor: pointer;
+}
+
+.text::after {
+  content: "";
+  position: absolute;
+  bottom: -0.25em;
+  left: -5%;
+  width: 110%;
+  border-radius: 1rem;
+  z-index: -1;
+}
+
+/* Hover states in footer */
+.about:hover,
+.services:hover,
+.projects:hover {
+  cursor: pointer;
+  color: white;
+}
+
+/* CHANGE COLOR SVG IN REACT:
+ADD CLASSNAME IN PATH OF SVG, THEN TARGET THE CLASS IN CSS
+*/
+.facebook:hover .facebook-icon,
+.instagram:hover .instagram-icon,
+.twitter:hover .twitter-icon,
+.pinterest:hover .pinterest-icon {
+  cursor: pointer;
+  fill: white;
+}
+
+/* Different colors of link underlines */
+.text.yellow::after {
+  border-bottom: 0.75em solid #fff3ad;
+}
+
+.text.orange::after {
+  border-bottom: 0.75em solid #ffdbd6;
+}
+
+/* Navigation contact styling */
+.navigation > li:last-child {
+  font-family: "Fraunces", serif;
+  font-size: var(--fs-400);
+  text-transform: uppercase;
+  background-color: white;
+  color: hsl(198, 62%, 26%);
+  padding-block: var(--gap-s);
+  padding-inline: var(--gap-m);
+  border-radius: 2rem;
+}
+
+.dropdown > li {
+  max-width: 100%;
+}
+
+.dropdown > li:last-child {
+  margin-block-start: var(--gap-m);
+}
+
+.dropdown > li:last-child > a {
+  font-family: "Fraunces", serif;
+  font-size: var(--fs-500);
+  text-transform: uppercase;
+  color: hsl(198, 62%, 26%);
+  background-color: hsl(51, 100%, 49%);
+  border-radius: 2rem;
+  padding-block: 1.25rem;
+  padding-inline: 2.25rem;
+}
+
+/* Change header background image depending on screen size */
+header[class*=large] {
+  background-image: url("../images/desktop/image-header.jpg");
+  background-position: 50%;
+}
+
+header[class*=small] {
+  background-image: url("../images/mobile/image-header.jpg");
+}
+
+/* Make images fill container */
+.box img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.box:nth-child(5),
+.box:nth-child(6) {
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 100%;
+}
+
+/* Change order of grid item on large screen */
+.box.order {
+  grid-row-end: 2;
+}
+
+/* Change header background image depending on screen size */
+.box[class*=large]:nth-child(5) {
+  background-image: url("../images/desktop/image-graphic-design.jpg");
+}
+
+.box[class*=small]:nth-child(5) {
+  background-image: url("../images/mobile/image-graphic-design.jpg");
+}
+
+.box[class*=large]:nth-child(6) {
+  background-image: url("../images/desktop/image-photography.jpg");
+}
+
+.box[class*=small]:nth-child(6) {
+  background-image: url("../images/mobile/image-photography.jpg");
+}
+
+/* Remove right margin in li-elements set in globals */
+.facebook,
+.instagram,
+.pinterest,
+.twitter {
+  margin-right: 0;
+}
+
+.dropdown > li {
+  margin-right: 0;
+}
+
+/* Create small round images for testimonials */
+.testimonial img {
+  width: 20%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+/* Decrease size of arrow image */
+.arrow img {
+  width: 10%;
+  height: 10%;
+}
+
+:root {
+  --fs-100: clamp(0.28rem, -0.17vw + 0.34rem, 0.15rem);
+  --fs-200: clamp(0.37rem, -0.18vw + 0.44rem, 0.24rem);
+  --fs-300: clamp(0.49rem, -0.15vw + 0.55rem, 0.38rem);
+  --fs-400: clamp(0.66rem, -0.05vw + 0.68rem, 0.62rem);
+  --fs-500: clamp(0.88rem, 0.17vw + 0.81rem, 1rem);
+  --fs-600: clamp(1.17rem, 0.6vw + 0.94rem, 1.62rem);
+  --fs-700: clamp(1.55rem, 1.42vw + 1.02rem, 2.62rem);
+  --fs-800: clamp(2.07rem, 2.88vw + 0.99rem, 4.24rem);
+  --fs-900: clamp(2.76rem, 5.45vw + 0.72rem, 6.85rem);
+  --fw-100: 100;
+  --fw-200: 200;
+  --fw-300: 300;
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-700: 700;
+  --fw-800: 800;
+  --fw-900: 900;
+  --padding-top-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-top-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-top-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-top-m: calc(8px + 1.5625vw);
+  --padding-top-l: calc(2 * (8px + 1.5625vw));
+  --padding-top-xl: calc(3 * (8px + 1.5625vw));
+  --padding-top-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-top-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-top-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-right-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-right-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-right-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-right-m: calc(8px + 1.5625vw);
+  --padding-right-l: calc(2 * (8px + 1.5625vw));
+  --padding-right-xl: calc(3 * (8px + 1.5625vw));
+  --padding-right-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-right-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-right-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-bottom-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-bottom-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-bottom-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-bottom-m: calc(8px + 1.5625vw);
+  --padding-bottom-l: calc(2 * (8px + 1.5625vw));
+  --padding-bottom-xl: calc(3 * (8px + 1.5625vw));
+  --padding-bottom-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-bottom-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-bottom-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-left-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-left-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-left-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-left-m: calc(8px + 1.5625vw);
+  --padding-left-l: calc(2 * (8px + 1.5625vw));
+  --padding-left-xl: calc(3 * (8px + 1.5625vw));
+  --padding-left-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-left-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-left-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-block-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-block-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-block-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-block-m: calc(8px + 1.5625vw);
+  --padding-block-l: calc(2 * (8px + 1.5625vw));
+  --padding-block-xl: calc(3 * (8px + 1.5625vw));
+  --padding-block-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-block-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-block-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-inline-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-inline-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-inline-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-inline-m: calc(8px + 1.5625vw);
+  --padding-inline-l: calc(2 * (8px + 1.5625vw));
+  --padding-inline-xl: calc(3 * (8px + 1.5625vw));
+  --padding-inline-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-inline-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-inline-4xl: calc(8 * (8px + 1.5625vw));
+  --padding-all-xxs: calc(0.1 * (8px + 1.5625vw));
+  --padding-all-xs: calc(0.25 * (8px + 1.5625vw));
+  --padding-all-s: calc(0.5 * (8px + 1.5625vw));
+  --padding-all-m: calc(8px + 1.5625vw);
+  --padding-all-l: calc(2 * (8px + 1.5625vw));
+  --padding-all-xl: calc(3 * (8px + 1.5625vw));
+  --padding-all-xxl: calc(4 * (8px + 1.5625vw));
+  --padding-all-3xl: calc(6 * (8px + 1.5625vw));
+  --padding-all-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-top-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-top-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-top-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-top-m: calc(8px + 1.5625vw);
+  --margin-top-l: calc(2 * (8px + 1.5625vw));
+  --margin-top-xl: calc(3 * (8px + 1.5625vw));
+  --margin-top-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-top-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-top-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-right-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-right-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-right-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-right-m: calc(8px + 1.5625vw);
+  --margin-right-l: calc(2 * (8px + 1.5625vw));
+  --margin-right-xl: calc(3 * (8px + 1.5625vw));
+  --margin-right-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-right-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-right-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-bottom-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-bottom-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-bottom-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-bottom-m: calc(8px + 1.5625vw);
+  --margin-bottom-l: calc(2 * (8px + 1.5625vw));
+  --margin-bottom-xl: calc(3 * (8px + 1.5625vw));
+  --margin-bottom-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-bottom-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-bottom-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-left-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-left-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-left-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-left-m: calc(8px + 1.5625vw);
+  --margin-left-l: calc(2 * (8px + 1.5625vw));
+  --margin-left-xl: calc(3 * (8px + 1.5625vw));
+  --margin-left-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-left-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-left-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-block-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-block-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-block-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-block-m: calc(8px + 1.5625vw);
+  --margin-block-l: calc(2 * (8px + 1.5625vw));
+  --margin-block-xl: calc(3 * (8px + 1.5625vw));
+  --margin-block-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-block-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-block-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-inline-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-inline-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-inline-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-inline-m: calc(8px + 1.5625vw);
+  --margin-inline-l: calc(2 * (8px + 1.5625vw));
+  --margin-inline-xl: calc(3 * (8px + 1.5625vw));
+  --margin-inline-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-inline-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-inline-4xl: calc(8 * (8px + 1.5625vw));
+  --margin-all-xxs: calc(0.1 * (8px + 1.5625vw));
+  --margin-all-xs: calc(0.25 * (8px + 1.5625vw));
+  --margin-all-s: calc(0.5 * (8px + 1.5625vw));
+  --margin-all-m: calc(8px + 1.5625vw);
+  --margin-all-l: calc(2 * (8px + 1.5625vw));
+  --margin-all-xl: calc(3 * (8px + 1.5625vw));
+  --margin-all-xxl: calc(4 * (8px + 1.5625vw));
+  --margin-all-3xl: calc(6 * (8px + 1.5625vw));
+  --margin-all-4xl: calc(8 * (8px + 1.5625vw));
+  --gap-xxs: calc(0.1 * (8px + 1.5625vw));
+  --gap-xs: calc(0.25 * (8px + 1.5625vw));
+  --gap-s: calc(0.5 * (8px + 1.5625vw));
+  --gap-m: calc(8px + 1.5625vw);
+  --gap-l: calc(2 * (8px + 1.5625vw));
+  --gap-xl: calc(3 * (8px + 1.5625vw));
+  --gap-xxl: calc(4 * (8px + 1.5625vw));
+  --gap-3xl: calc(6 * (8px + 1.5625vw));
+  --gap-4xl: calc(8 * (8px + 1.5625vw));
+  --lh-3xs: 1;
+  --lh-xxs: 1.125;
+  --lh-xs: 1.25;
+  --lh-s: 1.375;
+  --lh-m: 1.5;
+  --lh-l: 1.625;
+  --lh-xl: 1.75;
+  --lh-xxl: 1.875;
+  --lh-3xl: 2;
+  --measure-compact: 20ch;
+  --measure-medium: 35ch;
+  --measure-longform: 65ch;
+}
+
+body, html {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: white;
+  font-family: "Fraunces", serif;
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--lh-xxs);
+}
+
+h1 {
+  color: white;
+  font-size: var(--fs-800);
+  letter-spacing: 0.25ch;
+  text-transform: uppercase;
+  margin-block: var(--gap-xl);
+}
+
+h2 {
+  font-size: var(--fs-700);
+  font-weight: 900;
+}
+
+h3 {
+  color: hsl(210, 4%, 67%);
+  font-size: calc(var(--fs-400) * 1.2);
+  font-weight: var(--fw-900);
+  text-transform: uppercase;
+  letter-spacing: 0.4ch;
+  margin-block-start: 3.5em;
+}
+
+p {
+  font-family: "Barlow", sans-serif;
+  font-size: var(--fs-500);
+  color: hsl(210, 4%, 67%);
+  max-width: var(--measure-medium);
+  margin: 0 auto;
+  line-height: var(--lh-m);
+}
+
+header {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 100%;
+}
+
+li {
+  list-style-type: none;
+  margin-right: 1em;
+  max-width: var(--measure-medium);
+}/*# sourceMappingURL=App.css.map */

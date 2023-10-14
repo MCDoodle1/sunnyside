@@ -1,0 +1,121 @@
+@use 'sass:math';
+// Colors
+
+$primary-dark           :hsl(167, 40%, 24%);  // Dark desaturated cyan
+$primary-light          :hsl(168, 34%, 41%);  // Dark moderate cyan (footer)
+$secondary              :hsl(51, 100%, 49%);  // Yellow
+$tertiary               :hsl(7, 99%, 70%);    // Soft red
+$quaternery             :hsl(202, 86%, 72%);  // Light blue
+$neutral-lightest       :white;               // White
+$neutral-lighter        :hsl(210, 4%, 67%);   // Grayish blue
+$neutral-light          :hsl(232, 10%, 55%);  // Dark grayish blue
+$neutral-medium         :hsl(213, 9%, 39%);   // Very dark grayish blue
+$neutral-dark           :hsl(198, 62%, 26%);  // Dark blue (photography text)
+$neutral-darkest        :hsl(212, 27%, 19%);  // Very dark desaturated blue
+
+
+$font-family-sans: 'Barlow', sans-serif;
+$font-family-serif: 'Fraunces', serif;
+
+$breakpoints: (    
+    'tablet-portrait': 600px,      /* portrait tablets   */
+    'tablet-landscape': 900px,     /* landscape tablets  */
+    'desktop': 1200px,             /* laptops / desktops */
+    'big-desktop': 1800px          /* big desktops       */
+);
+
+// *** Global variables for font-sizes ***
+$ratio-min: 1.333;
+$ratio-max: 1.618;
+// -- Type scales / Ratios
+//    - 1.067 - Minor Second
+//    - 1.125 - Major Second
+//    - 1.200 - Minor Third
+//    - 1.250 - Major Third
+//    - 1.333 - Perfect Fourth
+//    - 1.414 - Augmented Fourth
+//    - 1.500 - Perfect Fifth
+//    - 1.618 - Golden Ratio
+
+$min-fs: 14px;  // minimum font-size
+$max-fs: 16px;  // maximum font-size
+$power: 0;
+$steps-fs: "100", "200", "300", "400", "500", "600", "700", "800", "900";
+$default-index-fs: index($steps-fs, "500");
+$default-min-bp: map-get($breakpoints, "tablet-portrait");
+$default-max-bp: map-get($breakpoints, "big-desktop");
+
+// Change pixels to rems
+@function to-rems($size) {
+    $rems: math.div($size, 16px) * 1rem;
+    @return $rems;
+  }
+
+@function round($number, $positions: 0) {
+    $n: 1;
+    @if $positions > 0 {
+        @for $i from 1 through $positions {
+            $n: $n * 10;
+        }
+    }
+    @return math.div(math.round($number * $n), $n);
+}
+
+@function clamped($min-fs, $max-fs, $min-bp: $default-min-bp, $max-bp: $default-max-bp) {
+    $slope: math.div($max-fs - $min-fs, $max-bp - $min-bp);
+    $slope-vw: round($slope * 100, 2);
+    $intercept-rems: round(to-rems($min-fs - $slope * $min-bp), 2);
+    $min-rems: round(to-rems($min-fs * math.pow($ratio-min, $power)), 2);
+    $max-rems: round(to-rems($max-fs * math.pow($ratio-max, $power)), 2);
+    @return clamp(#{$min-rems}, #{$slope-vw}vw + #{$intercept-rems}, #{$max-rems});
+}
+
+// Font weights:
+$font-weights: (
+    "100"               : 100,
+    "200"               : 200,
+    "300"               : 300,
+    "400"               : 400,
+    "500"               : 500,
+    "600"               : 600,
+    "700"               : 700,
+    "800"               : 800,
+    "900"               : 900,        
+);
+
+// padding, margin & gap
+$gutter: (              
+    "xxs"               : calc(0.1 * calc(8px + 1.5625vw)),
+    "xs"                : calc(0.25 * calc(8px + 1.5625vw)),
+    "s"                 : calc(0.5 * calc(8px + 1.5625vw)),
+    "m"                 : calc(8px + 1.5625vw),
+    "l"                 : calc(2 * calc(8px + 1.5625vw)),
+    "xl"                : calc(3 * calc(8px + 1.5625vw)),
+    "xxl"               : calc(4 * calc(8px + 1.5625vw)),
+    "3xl"               : calc(6 * calc(8px + 1.5625vw)),
+    "4xl"               : calc(8 * calc(8px + 1.5625vw)),
+);
+
+$gutter-units: ("top", "right", "bottom", "left", "block", "inline", "all");
+
+// Line heights:
+$line-heights: (
+    "3xs"               : 1,
+    "xxs"               : 1.125,
+    "xs"                : 1.25,
+    "s"                 : 1.375,
+    "m"                 : 1.5,
+    "l"                 : 1.625,
+    "xl"                : 1.75,
+    "xxl"               : 1.875,
+    "3xl"               : 2,   
+);
+
+// Max-width (length of text lines)
+$measure: (
+    "compact"           : 20ch,
+    "medium"            : 35ch,
+    "longform"          : 65ch,
+);
+
+$auto-grid-min-size: 5rem;

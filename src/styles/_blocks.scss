@@ -1,0 +1,100 @@
+@use './globals' as *;
+
+/* Navigation and hamburger menus */
+.navigation {
+    display: flex;
+    gap: var(--gap-m);
+    align-items: center;
+    color: $neutral-lightest;
+    font-family: $font-family-sans;
+    font-size: var(--fs-500);
+}
+
+.navigation > li > a:hover {
+    cursor: pointer;
+}
+
+.navigation > li:last-child:hover {
+    color: $neutral-lightest;
+    background-color: $quaternery;
+}
+
+.hamburger img {
+    width: 75%;
+    height: 75%;
+}
+
+.dropdown {
+    display: flex;
+    gap: var(--gap-l);
+    position: absolute;
+    font-family: $font-family-sans;
+    font-size: var(--fs-600);
+    color: $neutral-light;
+    background-color: $neutral-lightest;
+    width: 80%;
+    aspect-ratio: 1;
+    top: 20%;
+    left: 10%;
+}
+
+.dropdown::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    border-bottom: 25px solid $neutral-lightest;
+    border-left: 30px solid transparent;
+}
+
+/* Underlined link */
+.link {
+    --flow-space: 2em;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: calc(var(--fs-400) * 1.1);
+    font-weight: var(--fw-900);
+    letter-spacing: .1em;
+}
+
+.text {
+    position: relative;
+    z-index: 1;
+}
+
+.text:hover {
+    cursor: pointer;
+}
+
+.text::after {
+    content: "";
+    position: absolute;
+    bottom: -.25em;
+    left: -5%;
+    width: 110%;
+    border-radius: 1rem;
+    z-index: -1;
+}
+
+/* Hover states in footer */
+.about:hover,
+.services:hover,
+.projects:hover {
+    cursor: pointer;
+    color: $neutral-lightest;
+};
+
+
+        /* CHANGE COLOR SVG IN REACT:
+        ADD CLASSNAME IN PATH OF SVG, THEN TARGET THE CLASS IN CSS
+        */
+
+.facebook:hover .facebook-icon,
+.instagram:hover .instagram-icon,
+.twitter:hover .twitter-icon,
+.pinterest:hover .pinterest-icon {
+    cursor: pointer;
+    fill: $neutral-lightest;
+}

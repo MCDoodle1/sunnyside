@@ -1,0 +1,113 @@
+@use './globals' as *;
+
+/* Different colors of link underlines */ 
+.text.yellow::after {
+    border-bottom: .75em solid lighten(($secondary), 35%);
+}
+
+.text.orange::after {
+    border-bottom: .75em solid lighten(($tertiary), 22%);
+}
+
+/* Navigation contact styling */
+.navigation > li:last-child {
+    font-family: $font-family-serif;
+    font-size: var(--fs-400);
+    text-transform: uppercase;
+    background-color: $neutral-lightest;
+    color: $neutral-dark;
+    padding-block: var(--gap-s);
+    padding-inline: var(--gap-m);
+    border-radius: 2rem;
+}
+
+.dropdown > li {
+    max-width: 100%;
+}
+
+.dropdown > li:last-child {
+margin-block-start: var(--gap-m);
+}
+
+.dropdown > li:last-child > a {
+    font-family: $font-family-serif;
+    font-size: var(--fs-500);
+    text-transform: uppercase;
+    color: $neutral-dark;
+    background-color: $secondary;
+    border-radius: 2rem;
+    padding-block: 1.25rem;
+    padding-inline: 2.25rem;
+}
+
+/* Change header background image depending on screen size */ 
+header[class*='large'] {
+    background-image: url('../images/desktop/image-header.jpg');
+    background-position: 50%;
+}
+
+header[class*='small'] {
+    background-image: url('../images/mobile/image-header.jpg');
+}
+
+/* Make images fill container */
+.box img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.box:nth-child(5),
+.box:nth-child(6){
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 100%; 
+}
+
+/* Change order of grid item on large screen */
+.box.order{
+    grid-row-end: 2;
+}
+
+/* Change header background image depending on screen size */ 
+.box[class*='large']:nth-child(5) {
+    background-image: url('../images/desktop/image-graphic-design.jpg');
+}
+
+.box[class*='small']:nth-child(5) {
+    background-image: url('../images/mobile/image-graphic-design.jpg');
+}
+
+.box[class*='large']:nth-child(6) {
+    background-image: url('../images/desktop/image-photography.jpg');
+}
+
+.box[class*='small']:nth-child(6) {
+    background-image: url('../images/mobile/image-photography.jpg');
+}
+
+/* Remove right margin in li-elements set in globals */ 
+.facebook,
+.instagram,
+.pinterest,
+.twitter {
+    margin-right: 0;
+}
+
+.dropdown > li {
+    margin-right: 0;
+}
+
+/* Create small round images for testimonials */
+.testimonial img {
+    width: 20%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+/* Decrease size of arrow image */
+.arrow img {
+    width: 10%;
+    height: 10%; 
+}

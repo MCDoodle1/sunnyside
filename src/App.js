@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Menu from '../src/components/Menu';
+import Section from '../src/components/Section';
+import Testimonial from '../src/components/Testimonial';
+import Gallery from '../src/components/Gallery';
+import Footer from '../src/components/Footer';
+import useScreenSize from '../src/hooks/useScreenSize';
+import { useState } from 'react';
+
 
 function App() {
+
+  const screenSize = useScreenSize()
+  const [menuIsActive, setMenuIsActive] = useState(false);
+
+  /* opens and closes hamburger menu */
+  const activateMenu = () => 
+    setMenuIsActive(!menuIsActive);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Menu 
+        screenSize={screenSize}
+        menuIsActive={menuIsActive}
+        activateMenu={activateMenu}/>
+      <Section screenSize={screenSize}/>
+      <Testimonial screenSize={screenSize}/>
+      <Gallery screenSize={screenSize}/>
+      <Footer />
+    </>
   );
 }
 
